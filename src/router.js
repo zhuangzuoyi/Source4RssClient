@@ -1,23 +1,37 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-Vue.use(Router)
+// 引入组件
+import ShowDes from "./components/ShowDes"
+import SubShow from "./components/SubShow"
+// 要告诉 vue 使用 vueRouter
+Vue.use(VueRouter);
 
-export default new Router({
-  routes: [
+function dynamicPropsFunc (route) {
+      return {
+        sub:  route.params.sub,
+        title:  route.params.title
+      }
+    }
+
+
+const routes = [
     {
-      path: '/',
-      name: 'home',
-      component: Home
+        path: '/', redirect: '/SubShow'
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+        name:'subshow',
+        path:"/SubShow",
+        component: SubShow,
+        props: {newsletterPopup: false}
+    },
+    {
+        path:"/ShowDes",
+        component: ShowDes
     }
-  ]
+]
+
+var router =  new VueRouter({
+    routes
 })
+export default router;
